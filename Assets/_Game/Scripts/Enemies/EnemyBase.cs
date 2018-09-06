@@ -14,10 +14,16 @@ namespace Assets.Scripts.Enemies
         protected float SpeedShot;
 
         [SerializeField]
-        protected float Speeds;
+        protected float SpeedTime;
 
         [SerializeField]
-        protected float Idamage;
+        protected float damage;
+
+        [SerializeField]
+        protected float Energy;
+
+        [SerializeField]
+        protected float TimeExplosion;
 
         [SerializeField]
         protected GameObject ExplosionAimation;
@@ -27,6 +33,12 @@ namespace Assets.Scripts.Enemies
 
         [SerializeField]
         protected GameObject[] PowerUp;
+
+        [SerializeField]
+        private sbyte tweenX;
+
+        [SerializeField]
+        private sbyte tweenY;
 
         protected Rigidbody2D rigidbody2D;
 
@@ -38,8 +50,7 @@ namespace Assets.Scripts.Enemies
         {
             rigidbody2D = GetComponent<Rigidbody2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
-            animator = GetComponent<Animator>();
-            
+            animator = GetComponent<Animator>();  
         }
 
         protected virtual void SetPowerUp()
@@ -47,14 +58,14 @@ namespace Assets.Scripts.Enemies
             //Definir tipos de premiação 
         }
 
-        protected virtual void Tweem(float x, float y)
+        protected virtual void Tweem()
         {
-            Vector3 Moviment = new Vector3(x, y);
+            Vector3 Moviment = new Vector3(tweenX, tweenY);
 
             rigidbody2D.velocity = Moviment * Speed;
         }
 
-        protected virtual void SetDestroy(float time)
+        protected void SetDestroy()
         {
           var obj =  Instantiate(ExplosionAimation);
 
@@ -62,7 +73,7 @@ namespace Assets.Scripts.Enemies
 
            //set score of Destroy Enimes
 
-          Destroy(gameObject,time);
+          Destroy(gameObject,TimeExplosion);
         }
 
         protected virtual void SetShot(GameObject Shot,Transform Position)
@@ -71,21 +82,31 @@ namespace Assets.Scripts.Enemies
 
             shot.transform.position = Position.position;
 
-           shot.GetComponent<EnemyShotBase>().SetSpeed(Speeds);
+           shot.GetComponent<EnemyShotBase>().SetSpeed(SpeedShot);
         }
        
-        public abstract void SetShot();
 
         protected void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Player")|| collision.CompareTag("PlayerShield")){
-                collision.GetComponent<IDamage>().Set(Idamage);
+                collision.GetComponent<IDamage>().Set(damage);
             }
 
             if (collision.CompareTag("Limit")){
                 Destroy(gameObject);
             }
             
+        }
+
+        public void SetDamage(float value)
+        {
+            Energy -= value;
+
+            if (Energy <=0){
+                SetDestroy();
+            }
+
+
         }
 
 
