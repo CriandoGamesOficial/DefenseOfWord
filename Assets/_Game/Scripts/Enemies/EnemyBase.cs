@@ -7,14 +7,22 @@ namespace Assets.Scripts.Enemies
 
     public abstract class EnemyBase: MonoBehaviour
     {
+        [Header("ShotConfig")]
         [SerializeField]
-        protected float Speed;
+        protected int ShotXPosition;
+
+        [SerializeField]
+        protected int ShotYPosition;
 
         [SerializeField]
         protected float SpeedShot;
 
         [SerializeField]
-        protected float SpeedTime;
+        protected float ShotTime;
+
+        [Header("Enemy Config")]
+        [SerializeField]
+        protected float Speed;
 
         [SerializeField]
         protected float damage;
@@ -22,6 +30,7 @@ namespace Assets.Scripts.Enemies
         [SerializeField]
         protected float Energy;
 
+        [Header("Enemy Explosion Conif")]
         [SerializeField]
         protected float TimeExplosion;
 
@@ -34,12 +43,7 @@ namespace Assets.Scripts.Enemies
         [SerializeField]
         protected GameObject[] PowerUp;
 
-        [SerializeField]
-        private sbyte tweenX;
-
-        [SerializeField]
-        private sbyte tweenY;
-
+        [Header("Enemy Corpo config")]
         protected Rigidbody2D rigidbody2D;
 
         protected SpriteRenderer spriteRenderer;
@@ -60,9 +64,7 @@ namespace Assets.Scripts.Enemies
 
         protected virtual void Tweem()
         {
-            Vector3 Moviment = new Vector3(tweenX, tweenY);
-
-            rigidbody2D.velocity = Moviment * Speed;
+            
         }
 
         protected void SetDestroy()
@@ -82,7 +84,7 @@ namespace Assets.Scripts.Enemies
 
             shot.transform.position = Position.position;
 
-           shot.GetComponent<EnemyShotBase>().SetSpeed(SpeedShot);
+           shot.GetComponent<EnemyShotBase>().Set(SpeedShot,ShotXPosition,ShotYPosition);
         }
        
 

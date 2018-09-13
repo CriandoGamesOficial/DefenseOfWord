@@ -3,14 +3,11 @@ using UnityEngine;
 
 namespace Assets._Game.Scripts.Enemies.Craft
 {
-    class DoubleGun : EnemyBase
+    class SimpleGun : EnemyBase
     {
 
         [SerializeField]
-        private Transform GunLeft;
-
-        [SerializeField]
-        private Transform GunRigt;
+        private Transform Gun;
 
         [SerializeField]
         private GameObject Bullet;
@@ -30,17 +27,17 @@ namespace Assets._Game.Scripts.Enemies.Craft
             if (TweeDownTime > 0){
                 TweeDownTime -= Time.deltaTime;
                 base.Tweem();
-                ShotSides();
+                Shot();
             }
             else{
                 //implement
             }
         } 
 
-        private void ShotSides()
+        private void Shot()
         {
-            base.SetShot(Bullet, GunLeft);
-            base.SetShot(Bullet, GunRigt);
+            base.SetShot(Bullet, Gun);
+
         }
     }
 }

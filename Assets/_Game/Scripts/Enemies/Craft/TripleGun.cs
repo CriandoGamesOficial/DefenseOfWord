@@ -59,6 +59,14 @@ namespace Assets._Game.Scripts.Enemies.Craft
             base.SetShot(BulleSides, GunRigt);
         }
 
+        private void SetLeft()
+        {
+        }
+
+        private void SetRight()
+        {
+        }
+
 
     }
 }
