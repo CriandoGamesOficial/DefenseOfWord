@@ -18,6 +18,9 @@ namespace Assets.Scripts.Enemies
         protected float SpeedShot;
 
         [SerializeField]
+        protected float ShotDamage;
+
+        [SerializeField]
         protected float ShotTime;
 
         [Header("Enemy Config")]
@@ -84,7 +87,7 @@ namespace Assets.Scripts.Enemies
 
             shot.transform.position = Position.position;
 
-           shot.GetComponent<EnemyShotBase>().Set(SpeedShot,ShotXPosition,ShotYPosition);
+           shot.GetComponent<EnemyShotBase>().Set(SpeedShot,ShotDamage, ShotXPosition,ShotYPosition);
         }
        
 
@@ -92,6 +95,7 @@ namespace Assets.Scripts.Enemies
         {
             if (collision.CompareTag("Player")|| collision.CompareTag("PlayerShield")){
                 collision.GetComponent<IDamage>().Set(damage);
+                SetDestroy();
             }
 
             if (collision.CompareTag("Limit")){
